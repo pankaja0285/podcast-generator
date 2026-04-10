@@ -1,34 +1,50 @@
-# TRY 
-# Use the latest Ubuntu image as the base
+# TRY 3
 FROM ubuntu:latest
 
-# Prevent interactive prompts during package installation
-ENV DEBIAN_FRONTEND=noninteractive
-
-# Install prerequisites and Python 3.12 via deadsnakes PPA
 RUN apt-get update && apt-get install -y \
-    software-properties-common \
-    && add-apt-repository ppa:deadsnakes/ppa \
-    && apt-get update && apt-get install -y \
-    python3.12 \
-    python3.12-dev \
-    python3-pip \
-    && rm -rf /var/lib/apt/lists/*
+  python3.12 \
+  python3-pip \
+  git
 
-# Install PyYAML specifically for the new Python version
-# Note: Ubuntu 24.04+ may require --break-system-packages if not using a venv
-RUN python3.12 -m venv /opt/venv
-ENV PATH="/opt/venv/bin:$PATH"
-RUN python3.12 -m pip install --upgrade pip
-RUN python3.12 -m pip install pyyaml
+RUN pip3 install PyYAML
 
-# Copy your action code into the container
-COPY . /app
-WORKDIR /app
+COPY feed.py /usr/bin/feed.py
 
-# Set the entrypoint for the GitHub Action
-# This script will run when the container starts
-ENTRYPOINT ["python3.12", "/app/feed.py"]
+COPY entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+# # TRY 2
+# # Use the latest Ubuntu image as the base
+# FROM ubuntu:latest
+
+# # Prevent interactive prompts during package installation
+# ENV DEBIAN_FRONTEND=noninteractive
+
+# # Install prerequisites and Python 3.12 via deadsnakes PPA
+# RUN apt-get update && apt-get install -y \
+#     software-properties-common \
+#     && add-apt-repository ppa:deadsnakes/ppa \
+#     && apt-get update && apt-get install -y \
+#     python3.12 \
+#     python3.12-dev \
+#     python3-pip \
+#     && rm -rf /var/lib/apt/lists/*
+
+# # Install PyYAML specifically for the new Python version
+# # Note: Ubuntu 24.04+ may require --break-system-packages if not using a venv
+# RUN python3.12 -m venv /opt/venv
+# ENV PATH="/opt/venv/bin:$PATH"
+# RUN python3.12 -m pip install --upgrade pip
+# RUN python3.12 -m pip install pyyaml
+
+# # Copy your action code into the container
+# COPY . /app
+# WORKDIR /app
+
+# # Set the entrypoint for the GitHub Action
+# # This script will run when the container starts
+# ENTRYPOINT ["python3.12", "/app/feed.py"]
 
 
 # ****************  PREV ***********************************
