@@ -1,22 +1,53 @@
-# TRY 7
-FROM ubuntu:latest
+# TRY 8
+# Use an official Python 3.12 Debian-based image
+FROM python:3.12-slim
 
-RUN apt-get update && apt-get install -y \
-  python3.11 \
-  python3-pip \
-  git
+# Install build deps if needed (apt update included), then clean up
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       build-essential \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN pip3 install PyYAML
-# # Ensure pip is up to date first
-# RUN pip3 install --upgrade pip setuptools wheel
-# # Install specific compatible version
-# RUN pip3 install PyYAML==6.0.1
+# Create a directory for your app (absolute path recommended)
+# (Avoid relying on WORKDIR overriding behavior when GitHub mounts GITHUB_WORKSPACE;
+# see the docs linked above if using this image for Actions containers.)
+WORKDIR /usr/src/app
 
-COPY feed.py /usr/bin/feed.py
+# Copy application files (adjust as needed)
+COPY . /usr/src/app
 
+# Install Python dependencies
+RUN python -m pip install --upgrade pip \
+    && pip install pyyaml
+
+# Example entrypoint script pattern (make sure script is executable in repo)
 COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
+
+# ********************************************************************************************
+
+# # TRY 7
+# FROM ubuntu:latest
+
+# RUN apt-get update && apt-get install -y \
+#   python3.12 \
+#   python3-pip \
+#   git
+
+# RUN pip3 install PyYAML
+# # # Ensure pip is up to date first
+# # RUN pip3 install --upgrade pip setuptools wheel
+# # # Install specific compatible version
+# # RUN pip3 install PyYAML==6.0.1
+
+# COPY feed.py /usr/bin/feed.py
+
+# COPY entrypoint.sh /entrypoint.sh
+
+# ENTRYPOINT ["/entrypoint.sh"]
+# ************************************************************************************************
 
 # # TRY 2
 # # Use the latest Ubuntu image as the base
