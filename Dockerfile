@@ -17,8 +17,10 @@ RUN apt-get update && apt-get install -y \
 
 # Install PyYAML specifically for the new Python version
 # Note: Ubuntu 24.04+ may require --break-system-packages if not using a venv
+RUN python3.12 -m venv /opt/venv
+ENV PATH="/opt/venv/bin:$PATH"
 RUN python3.12 -m pip install --upgrade pip
-RUN python3.12 -m pip install pyyaml --break-system-packages
+RUN python3.12 -m pip install pyyaml
 
 # Copy your action code into the container
 COPY . /app
