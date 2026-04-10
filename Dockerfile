@@ -10,8 +10,11 @@ RUN apt-get update && apt-get install -y\
     python3-pip\
     git
 
-# Next RUN to install pyyaml
-# RUN pip install pyyaml
+# Create virtual environment
+RUN python3 -m venv /opt/venv
+# Activate virtual environment by adding it to PATH
+ENV PATH="/opt/venv/bin:$PATH"
+# Install requirements in virtual environment
 RUN python3 -m pip install -r requirements.txt
 
 # COPY files from the repo to the docker container
@@ -24,4 +27,3 @@ COPY entrypoint.sh /entrypoint.sh
 # - so basically runs the specific file when this machine is finished procuring
 #  
 ENTRYPOINT [ "/entrypoint.sh" ]
-
