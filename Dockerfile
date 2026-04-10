@@ -11,7 +11,8 @@ RUN apt-get update && apt-get install -y\
     git
 
 # Next RUN to install pyyaml
-RUN pip3 install pyyaml==5.3.1
+# RUN pip install pyyaml
+RUN python3 -m pip install -r requirements.txt
 
 # COPY files from the repo to the docker container
 COPY feed.py /usr/bin/feed.py
