@@ -1,16 +1,16 @@
-# TRY 3
+# TRY 7
 FROM ubuntu:latest
 
 RUN apt-get update && apt-get install -y \
-  python3.12 \
+  python3.11 \
   python3-pip \
   git
 
-# RUN pip3 install PyYAML>=6.0.1
-# Ensure pip is up to date first
-RUN pip3 install --upgrade pip setuptools wheel
-# Install specific compatible version
-RUN pip3 install PyYAML==6.0.1
+RUN pip3 install PyYAML
+# # Ensure pip is up to date first
+# RUN pip3 install --upgrade pip setuptools wheel
+# # Install specific compatible version
+# RUN pip3 install PyYAML==6.0.1
 
 COPY feed.py /usr/bin/feed.py
 
