@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 # echo is useful for debugging, also when the action runs we can clearly 
 # this section in the long list of commmands. And one can be as creative or 
