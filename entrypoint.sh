@@ -17,7 +17,7 @@ git config --global --add safe.directory /github/workspace
 
 # next we execute the python file 
 # NOTE: here we are using python3
-python3 /usr/bin/feed.py
+python3 /usr/src/app/feed.py
 
 # then push the podcast.xml that gets generated to git
 # we then add, commit to git - in one go, or we can do as 2 separate commands
