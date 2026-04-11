@@ -22,7 +22,9 @@ python3 /usr/bin/feed.py
 # then push the podcast.xml that gets generated to git
 # we then add, commit to git - in one go, or we can do as 2 separate commands
 # one for add and one for commit
-git add -A && git commit -m "Update Feed"
+# git add -A && git commit -m "Update Feed"
+git add --all
+git commit -m "Feed Updated and pushed to server"
 
 # git push and set upstream to enable tracking, we don't have to do it every time
 # - but this is sort of like a new machine, we just make sure the upstream branch
